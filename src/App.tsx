@@ -72,20 +72,18 @@ const products: Array<Product> = [
 ];
 
 export const App = () => {
-  const [loading, setLoading] = useState(false);
   const [thxShow, setThx] = useState(LS.getItem(LSKeys.ShowThx, false));
 
-  const submit = () => {
-    setLoading(true);
-    // sendDataToGA({
-    //   sub_choice: selectedOption,
-    //   sub_hidden: expanded ? "Yes" : "No",
-    // });
-    Promise.resolve().then(() => {
-      LS.setItem(LSKeys.ShowThx, true);
-      setThx(true);
-      setLoading(false);
+  const clickSubmit = () => {
+    window.gtag("event", "connect_click", {
+      variant_name: 'ghk_3508_ios_135_18_22_9'
     });
+  };
+
+  const submit = () => {
+    clickSubmit();
+    LS.setItem(LSKeys.ShowThx, true);
+    setThx(true);
   };
 
   if (thxShow) {
@@ -160,7 +158,7 @@ export const App = () => {
       <Gap size={72} />
 
       <div className={appSt.bottomBtn}>
-        <ButtonMobile loading={loading} block view="primary" onClick={submit}>
+        <ButtonMobile block view="primary" onClick={submit}>
           Подключить
         </ButtonMobile>
       </div>
